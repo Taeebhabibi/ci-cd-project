@@ -1,0 +1,54 @@
+on: [push]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: download repa
+        uses: actions/checkout@v4
+      - name: install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: install HTML checker
+        run: npm install -g htmlhint
+      - name: check html code
+        run: htmlhint index.html
+      - name: install css cheker
+        run: npm install -g stylehint
+      - name: check css
+        run: stylehint style.css
+      - name: install js checker
+        run: npm install -g eslint
+      - name: ckeck js code
+        run: eslint script.js
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    permissions: write-all
+
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: dowload repa
+        uses: actions/checkout@v4
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: upload website
+        uses: actions/upload-pages-artifact@v3
+
+        with:
+          path: ./
+      - name: deploy website
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+
+
+
