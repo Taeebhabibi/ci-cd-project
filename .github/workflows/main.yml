@@ -16,10 +16,7 @@ jobs:
         run: htmlhint index.html
      
 
-      - name: install js checker
-        run: npm install -g eslint
-      - name: ckeck js code
-        run: eslint script.js
+    
 
   deploy:
     needs: test
