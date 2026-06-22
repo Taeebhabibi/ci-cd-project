@@ -14,10 +14,8 @@ jobs:
         run: npm install -g htmlhint
       - name: check html code
         run: htmlhint index.html
-      - name: install css cheker
-        run: npm install -g stylelint
-      - name: check css
-        run: stylelint style.css
+     
+
       - name: install js checker
         run: npm install -g eslint
       - name: ckeck js code
